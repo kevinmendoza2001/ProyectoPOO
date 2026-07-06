@@ -1,8 +1,11 @@
-module org.example.proyectopoo {
+module ProyectoPOO {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
+    opens app to javafx.fxml;
+    opens controller to javafx.fxml;
+    opens model to javafx.fxml;
 
-    opens org.example.proyectopoo to javafx.fxml;
-    exports org.example.proyectopoo;
+    exports app;
 }
