@@ -1,6 +1,6 @@
 package model;
 
-public class ClaseTematica {
+public class Producto {
 
     private int id;
     private String nombre;
@@ -9,10 +9,10 @@ public class ClaseTematica {
     private int stock;
     private boolean disponible;
 
-    public ClaseTematica() {
+    public Producto() {
     }
 
-    public ClaseTematica(int id, String nombre, String categoria, double precio, int stock, boolean disponible) {
+    public Producto(int id, String nombre, String categoria, double precio, int stock, boolean disponible) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
