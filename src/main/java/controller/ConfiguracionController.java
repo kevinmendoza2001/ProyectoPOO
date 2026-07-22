@@ -30,20 +30,47 @@ public class ConfiguracionController {
 
     @FXML
     private void onGuardar(ActionEvent event) {
-        String nombreEmpresa = txtNombreEmpresa.getText() != null ? txtNombreEmpresa.getText().trim() : "";
+        String nombreEmpresa = txtNombreEmpresa.getText() == null
+                ? "" : txtNombreEmpresa.getText().trim();
+        String ruc = txtRuc.getText() == null
+                ? "" : txtRuc.getText().trim();
+        String direccion = txtDireccion.getText() == null
+                ? "" : txtDireccion.getText().trim();
+        String telefono = txtTelefono.getText() == null
+                ? "" : txtTelefono.getText().trim();
 
-        if (nombreEmpresa.isEmpty()) {
-            lblMensaje.setText("El nombre de la empresa es obligatorio.");
+        if (nombreEmpresa.length() < 3 || nombreEmpresa.length() > 100) {
+            lblMensaje.setText("El nombre de la empresa debe tener entre 3 y 100 caracteres.");
             return;
         }
 
-        Configuracion c = new Configuracion(1, nombreEmpresa,
-                txtRuc.getText(), txtDireccion.getText(), txtTelefono.getText());
+        if (!ruc.matches("\\d{13}")) {
+            lblMensaje.setText("El RUC debe contener exactamente 13 dígitos.");
+            return;
+        }
+
+        if (direccion.length() < 5 || direccion.length() > 150) {
+            lblMensaje.setText("Ingresa una dirección válida.");
+            return;
+        }
+
+        if (!telefonoValido(telefono)) {
+            lblMensaje.setText("El teléfono debe tener 10 dígitos y empezar con 0.");
+            return;
+        }
+
+        Configuracion c = new Configuracion(
+                1, nombreEmpresa, ruc, direccion, telefono
+        );
 
         if (configuracionDAO.guardar(c)) {
             lblMensaje.setText("Configuración guardada correctamente.");
         } else {
             lblMensaje.setText("No se pudo guardar la configuración.");
         }
+    }
+
+    private boolean telefonoValido(String telefono) {
+        return telefono.matches("^0\\d{9}$");
     }
 }

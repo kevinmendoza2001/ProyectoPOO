@@ -30,7 +30,7 @@ CREATE TABLE mesas (
 
 CREATE TABLE pedidos (
                          id SERIAL PRIMARY KEY,
-                         id_mesa INT NOT NULL REFERENCES mesas(id),
+                         id_mesa INT REFERENCES mesas(id),
                          id_usuario INT NOT NULL REFERENCES usuarios(id),
                          fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                          total DECIMAL(10,2) NOT NULL DEFAULT 0,

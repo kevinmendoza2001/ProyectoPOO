@@ -168,19 +168,34 @@ public class UsuarioController {
     }
 
     private Usuario leerFormulario(boolean validarPassword) {
-        String nombre = txtNombre.getText() != null ? txtNombre.getText().trim() : "";
-        String cedula = txtCedula.getText() != null ? txtCedula.getText().trim() : "";
-        String telefono = txtTelefono.getText() != null ? txtTelefono.getText().trim() : "";
-        String username = txtUsername.getText() != null ? txtUsername.getText().trim() : "";
-        String password = txtPassword.getText() != null ? txtPassword.getText() : "";
+        String nombre = txtNombre.getText() == null ? "" : txtNombre.getText().trim();
+        String cedula = txtCedula.getText() == null ? "" : txtCedula.getText().trim();
+        String telefono = txtTelefono.getText() == null ? "" : txtTelefono.getText().trim();
+        String username = txtUsername.getText() == null ? "" : txtUsername.getText().trim();
+        String password = txtPassword.getText() == null ? "" : txtPassword.getText();
         String rol = cmbRol.getValue();
 
-        if (nombre.isEmpty() || username.isEmpty()) {
-            mostrarMensaje("Nombre y usuario son obligatorios.");
+        if (nombre.length() < 3 || nombre.length() > 100) {
+            mostrarMensaje("El nombre debe tener entre 3 y 100 caracteres.");
             return null;
         }
 
-        if (rol == null || rol.isEmpty()) {
+        if (!cedulaValida(cedula)) {
+            mostrarMensaje("La cédula ecuatoriana no es válida.");
+            return null;
+        }
+
+        if (!telefono.matches("^09\\d{8}$")) {
+            mostrarMensaje("El teléfono debe tener 10 dígitos y empezar con 09.");
+            return null;
+        }
+
+        if (!username.matches("^[A-Za-z0-9_.]{4,20}$")) {
+            mostrarMensaje("El usuario debe tener 4 a 20 caracteres: letras, números, punto o guion bajo.");
+            return null;
+        }
+
+        if (rol == null || rol.isBlank()) {
             mostrarMensaje("Selecciona un rol.");
             return null;
         }
@@ -191,6 +206,33 @@ public class UsuarioController {
         }
 
         return new Usuario(0, nombre, cedula, telefono, username, password, rol);
+    }
+
+    private boolean cedulaValida(String cedula) {
+        if (!cedula.matches("\\d{10}")) {
+            return false;
+        }
+
+        int provincia = Integer.parseInt(cedula.substring(0, 2));
+        if (provincia < 1 || provincia > 24) {
+            return false;
+        }
+
+        int suma = 0;
+        for (int i = 0; i < 9; i++) {
+            int digito = Character.getNumericValue(cedula.charAt(i));
+
+            if (i % 2 == 0) {
+                digito *= 2;
+                if (digito > 9) {
+                    digito -= 9;
+                }
+            }
+            suma += digito;
+        }
+
+        int verificador = (10 - (suma % 10)) % 10;
+        return verificador == Character.getNumericValue(cedula.charAt(9));
     }
 
     private void mostrarMensaje(String texto) {

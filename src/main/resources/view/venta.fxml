@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.VentaController"
+      spacing="15">
+
+    <Label text="Registrar Venta" styleClass="login-title"/>
+
+    <VBox spacing="8" styleClass="login-card">
+        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Producto:" styleClass="field-label" prefWidth="70"/>
+            <ComboBox fx:id="cmbProducto" prefWidth="280" promptText="Selecciona un producto"/>
+
+            <Label text="Cantidad:" styleClass="field-label" prefWidth="70"/>
+            <TextField fx:id="txtCantidad" promptText="0" prefWidth="70"/>
+
+            <Button fx:id="btnAgregar" text="Agregar" onAction="#onAgregar" styleClass="login-button"/>
+        </HBox>
+
+        <Label fx:id="lblMensaje" styleClass="login-error"/>
+    </VBox>
+
+    <TableView fx:id="tablaCarrito" VBox.vgrow="ALWAYS" prefHeight="180">
+        <columns>
+            <TableColumn fx:id="colProductoCarrito" text="Producto" prefWidth="220"/>
+            <TableColumn fx:id="colCantidadCarrito" text="Cantidad" prefWidth="90"/>
+            <TableColumn fx:id="colPrecioCarrito" text="Precio Unit." prefWidth="100"/>
+            <TableColumn fx:id="colSubtotalCarrito" text="Subtotal" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="login-card">
+        <padding><Insets top="12" right="15" bottom="12" left="15"/></padding>
+        <Label text="Total:" styleClass="field-label"/>
+        <Label fx:id="lblTotalVenta" text="\$0.00" styleClass="login-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="btnLimpiarCarrito" text="Limpiar" onAction="#onLimpiarCarrito" styleClass="login-button"/>
+        <Button fx:id="btnRegistrarVenta" text="Registrar Venta" onAction="#onRegistrarVenta" styleClass="login-button"/>
+        <Button text="Imprimir comprobante" onAction="#onImprimirComprobante" styleClass="login-button"/>
+    </HBox>
+
+    <Label text="Consultar Stock" styleClass="login-title"/>
+    <TableView fx:id="tablaStock" VBox.vgrow="ALWAYS" prefHeight="180" editable="false">
+        <columns>
+            <TableColumn fx:id="colStockId" text="ID" prefWidth="40"/>
+            <TableColumn fx:id="colStockNombre" text="Nombre" prefWidth="200"/>
+            <TableColumn fx:id="colStockCategoria" text="Categoría" prefWidth="130"/>
+            <TableColumn fx:id="colStockPrecio" text="Precio" prefWidth="80"/>
+            <TableColumn fx:id="colStockCantidad" text="Stock" prefWidth="70"/>
+        </columns>
+    </TableView>
+</VBox>

@@ -167,34 +167,45 @@ public class ProductoController {
     }
 
     private Producto leerFormulario() {
-        String nombre = txtNombre.getText() != null ? txtNombre.getText().trim() : "";
-        String categoria = cmbCategoria.getValue();
-        String precioTexto = txtPrecio.getText() != null ? txtPrecio.getText().trim() : "";
-        String stockTexto = txtStock.getText() != null ? txtStock.getText().trim() : "";
+        String nombre = txtNombre.getText() == null ? "" : txtNombre.getText().trim();
+        String categoria = cmbCategoria.getValue() == null ? "" : cmbCategoria.getValue().trim();
+        String precioTexto = txtPrecio.getText() == null ? "" : txtPrecio.getText().trim();
+        String stockTexto = txtStock.getText() == null ? "" : txtStock.getText().trim();
 
-        if (nombre.isEmpty()) {
-            mostrarMensaje("El nombre es obligatorio.");
+        if (nombre.length() < 3 || nombre.length() > 100) {
+            mostrarMensaje("El nombre debe tener entre 3 y 100 caracteres.");
+            return null;
+        }
+
+        if (categoria.isEmpty()) {
+            mostrarMensaje("Selecciona o escribe una categoría.");
             return null;
         }
 
         double precio;
         int stock;
+
         try {
             precio = Double.parseDouble(precioTexto);
             stock = Integer.parseInt(stockTexto);
         } catch (NumberFormatException e) {
-            mostrarMensaje("Precio y stock deben ser numéricos.");
+            mostrarMensaje("Precio y stock deben ser números válidos.");
             return null;
         }
 
-        Producto p = new Producto(0, nombre, categoria, precio, stock, chkDisponible.isSelected());
-
-        if (!p.validarDatos()) {
-            mostrarMensaje("Datos inválidos: revisa nombre, precio y stock.");
+        if (!Double.isFinite(precio) || precio <= 0 || precio > 999999.99) {
+            mostrarMensaje("El precio debe ser mayor a 0.");
             return null;
         }
 
-        return p;
+        if (stock < 0) {
+            mostrarMensaje("El stock no puede ser negativo.");
+            return null;
+        }
+
+        return new Producto(
+                0, nombre, categoria, precio, stock, chkDisponible.isSelected()
+        );
     }
 
     private void mostrarMensaje(String texto) {

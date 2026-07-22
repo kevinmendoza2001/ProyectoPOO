@@ -22,6 +22,7 @@ public class DashboardController {
     @FXML private Label lblRol;
     @FXML private Button btnCerrarSesion;
     @FXML private Button btnProductos;
+    @FXML private Button btnVentas;
     @FXML private Button btnReportes;
     @FXML private Button btnUsuarios;
     @FXML private Button btnConfiguracion;
@@ -30,12 +31,9 @@ public class DashboardController {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-        if (lblBienvenida != null) {
-            lblBienvenida.setText("Bienvenido, " + usuario.getNombre());
-        }
-        if (lblRol != null) {
-            lblRol.setText("Rol: " + usuario.getRol());
-        }
+        lblBienvenida.setText("Bienvenido, " + usuario.getNombre());
+        lblRol.setText("Rol: " + usuario.getRol());
+
         aplicarPermisosPorRol();
         cargarPantallaInicial();
     }
@@ -43,32 +41,41 @@ public class DashboardController {
     private void aplicarPermisosPorRol() {
         String rol = usuario.getRol();
 
-        rootPane.getStyleClass().removeAll("theme-admin", "theme-cajero", "theme-reportes");
+        rootPane.getStyleClass().removeAll(
+                "theme-admin", "theme-cajero", "theme-reportes"
+        );
 
         switch (rol) {
             case "Administrador":
                 rootPane.getStyleClass().add("theme-admin");
                 btnProductos.setDisable(false);
+                btnVentas.setDisable(true);
                 btnReportes.setDisable(false);
                 btnUsuarios.setDisable(false);
                 btnConfiguracion.setDisable(false);
                 break;
+
             case "Cajero":
                 rootPane.getStyleClass().add("theme-cajero");
-                btnProductos.setDisable(false);
+                btnProductos.setDisable(true);
+                btnVentas.setDisable(false);
                 btnReportes.setDisable(true);
                 btnUsuarios.setDisable(true);
                 btnConfiguracion.setDisable(true);
                 break;
+
             case "Reportes":
                 rootPane.getStyleClass().add("theme-reportes");
                 btnProductos.setDisable(true);
+                btnVentas.setDisable(true);
                 btnReportes.setDisable(false);
                 btnUsuarios.setDisable(true);
                 btnConfiguracion.setDisable(true);
                 break;
+
             default:
                 btnProductos.setDisable(true);
+                btnVentas.setDisable(true);
                 btnReportes.setDisable(true);
                 btnUsuarios.setDisable(true);
                 btnConfiguracion.setDisable(true);
@@ -76,16 +83,26 @@ public class DashboardController {
     }
 
     private void cargarPantallaInicial() {
-        if ("Reportes".equals(usuario.getRol())) {
-            cargarContenido("/view/reporte.fxml");
-        } else {
-            cargarContenido("/view/producto.fxml");
+        switch (usuario.getRol()) {
+            case "Cajero":
+                cargarContenido("/view/venta.fxml");
+                break;
+            case "Reportes":
+                cargarContenido("/view/reporte.fxml");
+                break;
+            default:
+                cargarContenido("/view/producto.fxml");
         }
     }
 
     @FXML
     private void onGestionarProductos(ActionEvent event) {
         cargarContenido("/view/producto.fxml");
+    }
+
+    @FXML
+    private void onVentas(ActionEvent event) {
+        cargarContenido("/view/venta.fxml");
     }
 
     @FXML
@@ -107,7 +124,14 @@ public class DashboardController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFxml));
             Parent contenido = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof VentaController) {
+                ((VentaController) controller).setUsuario(usuario);
+            }
+
             contentArea.getChildren().setAll(contenido);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,16 +140,21 @@ public class DashboardController {
     @FXML
     private void onCerrarSesion(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/view/login.fxml")
+            );
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/css/stilos.css").toExternalForm());
+            scene.getStylesheets().add(
+                    getClass().getResource("/css/stilos.css").toExternalForm()
+            );
 
             Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Restobar - Iniciar sesión");
             stage.centerOnScreen();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

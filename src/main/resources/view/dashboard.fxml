@@ -18,38 +18,69 @@
 
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="login-card">
-            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+
             <VBox>
-                <Label fx:id="lblBienvenida" text="Bienvenido" styleClass="login-title"/>
-                <Label fx:id="lblRol" text="Rol" styleClass="login-subtitle"/>
+                <Label fx:id="lblBienvenida" text="Bienvenido"
+                       styleClass="login-title"/>
+                <Label fx:id="lblRol" text="Rol"
+                       styleClass="login-subtitle"/>
             </VBox>
-            <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="btnCerrarSesion" text="Cerrar sesión" onAction="#onCerrarSesion" styleClass="login-button"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="btnCerrarSesion"
+                    text="Cerrar sesión"
+                    onAction="#onCerrarSesion"
+                    styleClass="login-button"/>
         </HBox>
     </top>
 
     <left>
         <VBox spacing="10" prefWidth="200" styleClass="login-card">
-            <padding><Insets top="20" right="15" bottom="20" left="15"/></padding>
+            <padding>
+                <Insets top="20" right="15" bottom="20" left="15"/>
+            </padding>
 
-            <Button fx:id="btnProductos" text="Gestionar Productos" onAction="#onGestionarProductos"
-                    styleClass="login-button" maxWidth="Infinity"/>
+            <Button fx:id="btnProductos"
+                    text="Gestionar Productos"
+                    onAction="#onGestionarProductos"
+                    styleClass="login-button"
+                    maxWidth="Infinity"/>
 
-            <Button fx:id="btnReportes" text="Reportes" onAction="#onReportes"
-                    styleClass="login-button" maxWidth="Infinity"/>
+            <Button fx:id="btnVentas"
+                    text="Ventas"
+                    onAction="#onVentas"
+                    styleClass="login-button"
+                    maxWidth="Infinity"/>
 
-            <Button fx:id="btnUsuarios" text="Gestión de Usuarios" onAction="#onUsuarios"
-                    styleClass="login-button" maxWidth="Infinity"/>
+            <Button fx:id="btnReportes"
+                    text="Reportes"
+                    onAction="#onReportes"
+                    styleClass="login-button"
+                    maxWidth="Infinity"/>
 
-            <Button fx:id="btnConfiguracion" text="Configuración" onAction="#onConfiguracion"
-                    styleClass="login-button" maxWidth="Infinity"/>
+            <Button fx:id="btnUsuarios"
+                    text="Gestión de Usuarios"
+                    onAction="#onUsuarios"
+                    styleClass="login-button"
+                    maxWidth="Infinity"/>
+
+            <Button fx:id="btnConfiguracion"
+                    text="Configuración"
+                    onAction="#onConfiguracion"
+                    styleClass="login-button"
+                    maxWidth="Infinity"/>
         </VBox>
     </left>
 
     <center>
         <StackPane fx:id="contentArea">
-            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
         </StackPane>
     </center>
-
 </BorderPane>
