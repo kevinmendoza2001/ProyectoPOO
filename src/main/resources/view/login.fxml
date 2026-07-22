@@ -11,12 +11,12 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="controller.LoginController"
-           prefHeight="420.0" prefWidth="380.0"
+           prefHeight="550.0" prefWidth="480.0"
            styleClass="login-root">
 
-    <VBox alignment="CENTER" spacing="14" maxWidth="300" styleClass="login-card">
+    <VBox alignment="CENTER" spacing="16" maxWidth="330" styleClass="login-card">
         <padding>
-            <Insets top="30" bottom="30" left="30" right="30"/>
+            <Insets top="40" bottom="40" left="35" right="35"/>
         </padding>
 
         <Label text="RESTOBAR" styleClass="login-title"/>

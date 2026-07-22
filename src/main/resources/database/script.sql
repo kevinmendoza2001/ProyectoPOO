@@ -44,3 +44,20 @@ CREATE TABLE detalle_pedido (
                                 cantidad INT NOT NULL,
                                 subtotal DECIMAL(10,2) NOT NULL
 );
+
+CREATE TABLE configuracion (
+                               id INT PRIMARY KEY DEFAULT 1,
+                               nombre_empresa VARCHAR(100) NOT NULL,
+                               ruc VARCHAR(20),
+                               direccion VARCHAR(150),
+                               telefono VARCHAR(20),
+                               CONSTRAINT solo_una_fila CHECK (id = 1)
+);
+
+INSERT INTO usuarios (nombre, cedula, telefono, username, password, rol) VALUES
+                                                                             ('Administrador', '1729011559', '0984943767', 'admin', 'admin123', 'Administrador'),
+                                                                             ('Carlos Cajero', '1714151242', '0963997831', 'cajero', 'cajero123', 'Cajero'),
+                                                                             ('Rita Reportes', '1722453245', '0987654321', 'reportes', 'reportes123', 'Reportes');
+
+INSERT INTO configuracion (id, nombre_empresa, ruc, direccion, telefono) VALUES
+    (1, 'Restobar', '1729011559001', 'Quito, Ecuador', '022345678');

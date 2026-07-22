@@ -8,74 +8,55 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ProductoController"
-            prefHeight="550.0" prefWidth="750.0"
-            styleClass="login-root">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ProductoController"
+      spacing="15">
 
-    <top>
-        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="login-card">
-            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
-            <Label text="Gestión de Productos" styleClass="login-title"/>
-            <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="btnVolver" text="Volver al panel" onAction="#onVolver" styleClass="login-button"/>
+    <Label text="Gestión de Productos" styleClass="login-title"/>
+
+    <VBox spacing="8" styleClass="login-card">
+        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Nombre:" styleClass="field-label" prefWidth="70"/>
+            <TextField fx:id="txtNombre" promptText="Nombre del producto" HBox.hgrow="ALWAYS"/>
+
+            <Label text="Categoría:" styleClass="field-label" prefWidth="70"/>
+            <ComboBox fx:id="cmbCategoria" prefWidth="150" editable="true"/>
         </HBox>
-    </top>
 
-    <center>
-        <VBox spacing="15">
-            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Precio:" styleClass="field-label" prefWidth="70"/>
+            <TextField fx:id="txtPrecio" promptText="0.00" prefWidth="100"/>
 
-            <!-- Formulario -->
-            <VBox spacing="8" styleClass="login-card">
-                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+            <Label text="Stock:" styleClass="field-label" prefWidth="70"/>
+            <TextField fx:id="txtStock" promptText="0" prefWidth="80"/>
 
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Nombre:" styleClass="field-label" prefWidth="70"/>
-                    <TextField fx:id="txtNombre" promptText="Nombre del producto" HBox.hgrow="ALWAYS"/>
+            <CheckBox fx:id="chkDisponible" text="Disponible" selected="true"/>
+        </HBox>
 
-                    <Label text="Categoría:" styleClass="field-label" prefWidth="70"/>
-                    <ComboBox fx:id="cmbCategoria" prefWidth="150" editable="true"/>
-                </HBox>
+        <Label fx:id="lblMensaje" styleClass="login-error"/>
 
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Precio:" styleClass="field-label" prefWidth="70"/>
-                    <TextField fx:id="txtPrecio" promptText="0.00" prefWidth="100"/>
+        <HBox spacing="10">
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="login-button"/>
+            <Button fx:id="btnActualizar" text="Actualizar" onAction="#onActualizar" styleClass="login-button"/>
+            <Button fx:id="btnEliminar" text="Eliminar" onAction="#onEliminar" styleClass="login-button"/>
+            <Button fx:id="btnLimpiar" text="Limpiar" onAction="#onLimpiar" styleClass="login-button"/>
+        </HBox>
+    </VBox>
 
-                    <Label text="Stock:" styleClass="field-label" prefWidth="70"/>
-                    <TextField fx:id="txtStock" promptText="0" prefWidth="80"/>
-
-                    <CheckBox fx:id="chkDisponible" text="Disponible" selected="true"/>
-                </HBox>
-
-                <Label fx:id="lblMensaje" styleClass="login-error"/>
-
-                <HBox spacing="10">
-                    <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="login-button"/>
-                    <Button fx:id="btnActualizar" text="Actualizar" onAction="#onActualizar" styleClass="login-button"/>
-                    <Button fx:id="btnEliminar" text="Eliminar" onAction="#onEliminar" styleClass="login-button"/>
-                    <Button fx:id="btnLimpiar" text="Limpiar" onAction="#onLimpiar" styleClass="login-button"/>
-                </HBox>
-            </VBox>
-
-            <!-- Tabla -->
-            <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
-                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
-                    <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="130"/>
-                    <TableColumn fx:id="colPrecio" text="Precio" prefWidth="80"/>
-                    <TableColumn fx:id="colStock" text="Stock" prefWidth="70"/>
-                    <TableColumn fx:id="colDisponible" text="Disponible" prefWidth="80"/>
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
-
-</BorderPane>
+    <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="200"/>
+            <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="130"/>
+            <TableColumn fx:id="colPrecio" text="Precio" prefWidth="80"/>
+            <TableColumn fx:id="colStock" text="Stock" prefWidth="70"/>
+            <TableColumn fx:id="colDisponible" text="Disponible" prefWidth="80"/>
+        </columns>
+    </TableView>
+</VBox>

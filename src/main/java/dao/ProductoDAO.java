@@ -113,6 +113,24 @@ public class ProductoDAO implements ICRUD<Producto> {
         return null;
     }
 
+    public boolean existeNombre(String nombre, int idExcluir) {
+        String sql = "SELECT id FROM productos WHERE LOWER(nombre) = LOWER(?) AND id <> ?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            ps.setInt(2, idExcluir);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar nombre de producto: " + e.getMessage());
+            return false;
+        }
+    }
+
     private Producto mapear(ResultSet rs) throws SQLException {
         return new Producto(
                 rs.getInt("id"),

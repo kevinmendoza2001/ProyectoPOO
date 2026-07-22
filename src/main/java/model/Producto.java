@@ -4,7 +4,7 @@ public class Producto {
 
     private int id;
     private String nombre;
-    private String categoria; // Entrada, Plato fuerte, Bebida, Postre
+    private String categoria;
     private double precio;
     private int stock;
     private boolean disponible;
@@ -45,6 +45,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "ClaseTematica{id=" + id + ", nombre='" + nombre + "', precio=" + precio + "}";
+        return "Producto{id=" + id + ", nombre='" + nombre + "', precio=" + precio + "}";
     }
 }

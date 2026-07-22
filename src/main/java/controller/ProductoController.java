@@ -5,11 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -17,10 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.Producto;
-
-import java.io.IOException;
 
 public class ProductoController {
 
@@ -35,7 +30,6 @@ public class ProductoController {
     @FXML private Button btnActualizar;
     @FXML private Button btnEliminar;
     @FXML private Button btnLimpiar;
-    @FXML private Button btnVolver;
 
     @FXML private TableView<Producto> tablaProductos;
     @FXML private TableColumn<Producto, Integer> colId;
@@ -95,6 +89,11 @@ public class ProductoController {
             return;
         }
 
+        if (productoDAO.existeNombre(p.getNombre(), 0)) {
+            mostrarMensaje("Ya existe un producto con ese nombre.");
+            return;
+        }
+
         if (productoDAO.guardar(p)) {
             mostrarMensaje("Producto guardado correctamente.");
             cargarProductos();
@@ -117,6 +116,11 @@ public class ProductoController {
         }
         p.setId(productoSeleccionado.getId());
 
+        if (productoDAO.existeNombre(p.getNombre(), p.getId())) {
+            mostrarMensaje("Ya existe otro producto con ese nombre.");
+            return;
+        }
+
         if (productoDAO.actualizar(p)) {
             mostrarMensaje("Producto actualizado correctamente.");
             cargarProductos();
@@ -134,10 +138,11 @@ public class ProductoController {
         }
 
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION,
-                "¿Seguro que deseas eliminar \"" + productoSeleccionado.getNombre() + "\"?");
+                "¿Seguro que deseas eliminar \"" + productoSeleccionado.getNombre() + "\"?",
+                ButtonType.YES, ButtonType.NO);
         confirmacion.setHeaderText(null);
         confirmacion.showAndWait().ifPresent(respuesta -> {
-            if (respuesta.getButtonData().isDefaultButton()) {
+            if (respuesta == ButtonType.YES) {
                 if (productoDAO.eliminar(productoSeleccionado.getId())) {
                     mostrarMensaje("Producto eliminado.");
                     cargarProductos();
@@ -159,25 +164,6 @@ public class ProductoController {
         txtStock.clear();
         chkDisponible.setSelected(true);
         lblMensaje.setText("");
-    }
-
-    @FXML
-    private void onVolver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) btnVolver.getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/css/stilos.css").toExternalForm());
-
-            stage.setScene(scene);
-            stage.setTitle("Restobar - Panel principal");
-            stage.centerOnScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarMensaje("No se pudo volver al panel principal.");
-        }
     }
 
     private Producto leerFormulario() {

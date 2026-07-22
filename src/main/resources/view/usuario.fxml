@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.UsuarioController"
+      spacing="15">
+
+    <Label text="Gestión de Usuarios" styleClass="login-title"/>
+
+    <VBox spacing="8" styleClass="login-card">
+        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Nombre:" styleClass="field-label" prefWidth="80"/>
+            <TextField fx:id="txtNombre" promptText="Nombre completo" HBox.hgrow="ALWAYS"/>
+
+            <Label text="Cédula:" styleClass="field-label" prefWidth="60"/>
+            <TextField fx:id="txtCedula" promptText="Cédula" prefWidth="120"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Teléfono:" styleClass="field-label" prefWidth="80"/>
+            <TextField fx:id="txtTelefono" promptText="Teléfono" prefWidth="120"/>
+
+            <Label text="Rol:" styleClass="field-label" prefWidth="60"/>
+            <ComboBox fx:id="cmbRol" prefWidth="150"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Usuario:" styleClass="field-label" prefWidth="80"/>
+            <TextField fx:id="txtUsername" promptText="Usuario de acceso" prefWidth="150"/>
+
+            <Label text="Contraseña:" styleClass="field-label" prefWidth="90"/>
+            <PasswordField fx:id="txtPassword" promptText="Mín. 6 caracteres" prefWidth="150"/>
+        </HBox>
+
+        <Label fx:id="lblMensaje" styleClass="login-error"/>
+
+        <HBox spacing="10">
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar" styleClass="login-button"/>
+            <Button fx:id="btnActualizar" text="Actualizar" onAction="#onActualizar" styleClass="login-button"/>
+            <Button fx:id="btnEliminar" text="Eliminar" onAction="#onEliminar" styleClass="login-button"/>
+            <Button fx:id="btnLimpiar" text="Limpiar" onAction="#onLimpiar" styleClass="login-button"/>
+        </HBox>
+    </VBox>
+
+    <TableView fx:id="tablaUsuarios" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+            <TableColumn fx:id="colNombre" text="Nombre" prefWidth="220"/>
+            <TableColumn fx:id="colUsername" text="Usuario" prefWidth="150"/>
+            <TableColumn fx:id="colRol" text="Rol" prefWidth="130"/>
+        </columns>
+    </TableView>
+</VBox>

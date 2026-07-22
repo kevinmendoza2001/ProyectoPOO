@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDAO implements ICRUD<Usuario> {
+
     public Usuario autenticar(String username, String password) {
         String sql = "SELECT id, nombre, cedula, telefono, username, password, rol " +
                 "FROM usuarios WHERE username = ? AND password = ?";
@@ -127,6 +128,24 @@ public class UsuarioDAO implements ICRUD<Usuario> {
             System.out.println("Error al buscar usuario: " + e.getMessage());
         }
         return null;
+    }
+
+    public boolean existeUsername(String username, int idExcluir) {
+        String sql = "SELECT id FROM usuarios WHERE LOWER(username) = LOWER(?) AND id <> ?";
+
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setInt(2, idExcluir);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar username: " + e.getMessage());
+            return false;
+        }
     }
 
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {

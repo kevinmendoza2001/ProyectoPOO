@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ConfiguracionController"
+      spacing="15">
+
+    <Label text="Configuración" styleClass="login-title"/>
+
+    <VBox spacing="12" maxWidth="380" styleClass="login-card">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+        <VBox spacing="6">
+            <Label text="Nombre de la empresa" styleClass="field-label"/>
+            <TextField fx:id="txtNombreEmpresa" promptText="Ej. Restobar"/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="RUC" styleClass="field-label"/>
+            <TextField fx:id="txtRuc" promptText="RUC"/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="Dirección" styleClass="field-label"/>
+            <TextField fx:id="txtDireccion" promptText="Dirección"/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="Teléfono" styleClass="field-label"/>
+            <TextField fx:id="txtTelefono" promptText="Teléfono"/>
+        </VBox>
+
+        <Label fx:id="lblMensaje" styleClass="login-error"/>
+
+        <Button fx:id="btnGuardar" text="Guardar cambios" onAction="#onGuardar" styleClass="login-button" maxWidth="Infinity"/>
+    </VBox>
+</VBox>

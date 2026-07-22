@@ -21,7 +21,7 @@ public class Usuario extends Persona {
     @Override
     public boolean validarDatos() {
         return username != null && !username.trim().isEmpty()
-                && password != null && password.length() >= 4
+                && password != null && password.length() >= 6
                 && rol != null && !rol.trim().isEmpty();
     }
 
